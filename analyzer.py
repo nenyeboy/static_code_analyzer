@@ -34,11 +34,9 @@ def analyze_code(source_code):
     config = load_config()
 
     try:
-        # Parse source code into an AST (Abstract Syntax Tree)
         tree = ast.parse(source_code)
         lines = source_code.splitlines()
 
-        # Apply enabled rules
         if config.get("unused_variable"):
             issues.extend(rule_unused_variable(tree))
         if config.get("inconsistent_indentation"):
@@ -50,8 +48,10 @@ def analyze_code(source_code):
         if config.get("deep_nesting"):
             issues.extend(rule_deep_nesting(tree))
 
-        # Return list of issues or a clean message
         return issues if issues else ["No issues detected."]
 
     except SyntaxError as e:
-        return [f"Syntax Error: {e}"]
+        return [
+            f"Syntax Error: {e}",
+        "   Note: Skipping all AST-based checks due to invalid syntax."
+        ]

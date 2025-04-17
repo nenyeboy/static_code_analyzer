@@ -21,9 +21,15 @@ def rule_unused_variable(tree):
 def rule_inconsistent_indentation(lines):
     issues = []
     for idx, line in enumerate(lines, start=1):
+        stripped = line.lstrip()
+        if not stripped:  # skip empty or whitespace-only lines
+            continue
+
+        indent = len(line) - len(stripped)
+
         if "\t" in line:
             issues.append(f"Line {idx}: Uses tab instead of spaces.")
-        elif len(line) - len(line.lstrip(' ')) % 4 != 0:
+        elif indent % 4 != 0:
             issues.append(f"Line {idx}: Indentation not a multiple of 4.")
     return issues
 

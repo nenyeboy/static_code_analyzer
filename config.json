@@ -1,0 +1,7 @@
+{
+    "unused_variable": true,
+    "inconsistent_indentation": true,
+    "missing_docstring": true,
+    "long_function": true,
+    "deep_nesting": true
+  }
